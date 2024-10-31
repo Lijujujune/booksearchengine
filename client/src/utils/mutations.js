@@ -1,62 +1,69 @@
 import { gql } from '@apollo/client';
 
-// Mutation for signing up a user
-export const ADD_USER = gql`
-  mutation AddUser($username: String!, $email: String!, $password: String!) {
-    addUser(username: $username, email: $email, password: $password) {
-      token
-      user {
-        _id
-        username
-        email
-      }
-    }
-  }
-`;
-
-// Mutation for logging in a user
+// GraphQL mutation to login a user
 export const LOGIN_USER = gql`
-  mutation LoginUser($email: String!, $password: String!) {
-    login(email: $email, password: $password) {
-      token
-      user {
-        _id
-        username
-        email
-      }
+    mutation login($email: String!, $password: String!) {
+        login(email: $email, password: $password) {
+            token
+            user {
+                _id
+                username
+                email
+            }
+        }
     }
-  }
 `;
 
-// Mutation for saving a book
+// GraphQL mutation to save a book for a logged in user
 export const SAVE_BOOK = gql`
-  mutation SaveBook($bookData: BookInput!) {
-    saveBook(bookData: $bookData) {
-      _id
-      username
-      email
-      savedBooks {
-        bookId
-        title
-        authors
-        description
-        image
-        link
-      }
+    mutation saveBook($bookData: BookInput!) {
+        saveBook(bookData: $bookData) {
+            _id
+            username
+            email
+            bookCount
+            savedBooks {
+                bookId
+                authors
+                description
+                title
+                image
+                link
+            }
+        }
     }
-  }
 `;
 
-// Mutation for removing a book
-export const REMOVE_BOOK = gql`
-  mutation RemoveBook($bookId: ID!) {
-    removeBook(bookId: $bookId) {
-      _id
-      username
-      savedBooks {
-        bookId
-        title
-      }
+// GraphQL mutation to delete a saved book for a logged in user
+export const DELETE_BOOK = gql`
+    mutation deleteBook($bookId: ID!) {
+        deleteBook(bookId: $bookId) {
+            _id
+            username
+            email
+            bookCount
+            savedBooks {
+                bookId
+                authors
+                description
+                title
+                image
+                link
+            }
+        }
     }
-  }
+`;
+
+// GraphQL mutation to create a new user
+export const CREATE_USER = gql`
+    mutation createUser($username: String!, $email: String!, $password: String!) {
+        createUser(username: $username, email: $email, password: $password) {
+            token
+            user {
+                _id
+                username
+                email
+            }
+        }
+    }
 `;
